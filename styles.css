@@ -1,0 +1,12 @@
+body {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.centered-div {
+	width: 350px;
+   	height: 350px;
+    border: solid;
+}
