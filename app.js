@@ -30,7 +30,7 @@ const date = getCurrentDate();
 console.log(date);
 
 function timeUntilEndOfDay(currentTime) {
-
+  
   const totalHoursInDay = 24;
   const totalMinutesInHour = 60;
   const totalSecondsInMinute = 60;
@@ -39,17 +39,23 @@ function timeUntilEndOfDay(currentTime) {
   const minutesPassed = currentTime.minutes;
   const secondsPassed = currentTime.seconds;
 
+  // Calculate hours, minutes, and seconds left in the day
   const hoursLeft = totalHoursInDay - hoursPassed - 1;
   const minutesLeft = totalMinutesInHour - minutesPassed - 1;
   const secondsLeft = totalSecondsInMinute - secondsPassed;
 
+  // Adjusting minutes and hours based on seconds and minutes overflow
   const adjustedMinutesLeft = secondsLeft === 60 ? minutesLeft + 1 : minutesLeft;
   const adjustedHoursLeft = adjustedMinutesLeft === 60 ? hoursLeft + 1 : hoursLeft;
 
+  // Convert the remaining hours into minutes and seconds
+  const totalMinutesLeft = (adjustedHoursLeft * totalMinutesInHour) + adjustedMinutesLeft;
+  const totalSecondsLeft = (totalMinutesLeft * totalSecondsInMinute) + (secondsLeft === 60 ? 0 : secondsLeft);
+
   return {
     hours: adjustedHoursLeft < 0 ? 0 : adjustedHoursLeft,
-    minutes: adjustedMinutesLeft < 0 ? 0 : adjustedMinutesLeft,
-    seconds: secondsLeft === 60 ? 0 : secondsLeft
+    minutes: totalMinutesLeft < 0 ? 0 : totalMinutesLeft,
+    seconds: totalSecondsLeft < 0 ? 0 : totalSecondsLeft
   };
 }
 
