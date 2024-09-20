@@ -55,3 +55,33 @@ function timeUntilEndOfDay(currentTime) {
 
 const EndOfDay = timeUntilEndOfDay(time);
 console.log(EndOfDay);
+
+function timeUntilEndOfMonth(currentDate, currentTime) {
+
+  const { year, monthNumber, dayNumber } = currentDate;
+
+  const now = new Date(year, monthNumber - 1, dayNumber);
+  now.setHours(currentTime.hours);
+  now.setMinutes(currentTime.minutes);
+  now.setSeconds(currentTime.seconds);
+
+  const lastDayOfMonth = new Date(year, monthNumber, 0);
+  lastDayOfMonth.setHours(23, 59, 59);
+
+  const timeDifference = lastDayOfMonth - now;
+  
+  const secondsLeft = Math.floor((timeDifference / 1000) % 60);
+  const minutesLeft = Math.floor((timeDifference / (1000 * 60)) % 60);
+  const hoursLeft = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+  const daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  
+  return {
+    days: daysLeft,
+    hours: hoursLeft,
+    minutes: minutesLeft,
+    seconds: secondsLeft
+  };
+}
+
+const EndOfMonth = timeUntilEndOfMonth(date, time);
+console.log(EndOfMonth);
