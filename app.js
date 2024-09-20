@@ -66,28 +66,93 @@ function timeUntilEndOfMonth(currentDate, currentTime) {
 
   const { year, monthNumber, dayNumber } = currentDate;
 
+  // Set the current date and time
   const now = new Date(year, monthNumber - 1, dayNumber);
   now.setHours(currentTime.hours);
   now.setMinutes(currentTime.minutes);
   now.setSeconds(currentTime.seconds);
 
+  // Get the last day of the month at 23:59:59
   const lastDayOfMonth = new Date(year, monthNumber, 0);
   lastDayOfMonth.setHours(23, 59, 59);
 
+  // Calculate the time difference in milliseconds
   const timeDifference = lastDayOfMonth - now;
   
-  const secondsLeft = Math.floor((timeDifference / 1000) % 60);
-  const minutesLeft = Math.floor((timeDifference / (1000 * 60)) % 60);
-  const hoursLeft = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
-  const daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  
+  // Convert the time difference into days, hours, minutes, and seconds
+  const totalSecondsLeft = Math.floor(timeDifference / 1000);
+  const totalMinutesLeft = Math.floor(totalSecondsLeft / 60);
+  const totalHoursLeft = Math.floor(totalMinutesLeft / 60);
+  const totalDaysLeft = Math.floor(totalHoursLeft / 24);
+
+  const hoursLeft = totalHoursLeft % 24;
+  const minutesLeft = totalMinutesLeft % 60;
+  const secondsLeft = totalSecondsLeft % 60;
+
   return {
-    days: daysLeft,
-    hours: hoursLeft,
-    minutes: minutesLeft,
-    seconds: secondsLeft
+    days: totalDaysLeft,
+    hours: totalHoursLeft,     // Total hours left (including days converted to hours)
+    minutes: totalMinutesLeft, // Total minutes left (including hours converted to minutes)
+    seconds: totalSecondsLeft  // Total seconds left (including minutes converted to seconds)
   };
 }
 
 const EndOfMonth = timeUntilEndOfMonth(date, time);
 console.log(EndOfMonth);
+
+function timeUntilEndOfYear(currentDate, currentTime) {
+  const { year, monthNumber, dayNumber } = currentDate;
+
+  // Set the current date and time
+  const now = new Date(year, monthNumber - 1, dayNumber);
+  now.setHours(currentTime.hours);
+  now.setMinutes(currentTime.minutes);
+  now.setSeconds(currentTime.seconds);
+
+  // Get the last day of the year at 23:59:59
+  const lastDayOfYear = new Date(year, 11, 31, 23, 59, 59);
+
+  // Helper function to calculate the exact number of days in a given month
+  function daysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate();
+  }
+
+  // Step 1: Calculate the total months remaining
+  let remainingMonths = 11 - (monthNumber - 1);
+
+  // Step 2: Calculate the remaining days in the current month and future months
+  const daysInCurrentMonth = daysInMonth(year, monthNumber - 1);
+  const daysLeftInCurrentMonth = daysInCurrentMonth - dayNumber;
+
+  // Initialize totalDaysLeft with the days remaining in the current month
+  let totalDaysLeft = daysLeftInCurrentMonth;
+
+  // Add the remaining days of the upcoming months until December
+  for (let i = monthNumber; i < 11; i++) {
+    totalDaysLeft += daysInMonth(year, i);
+  }
+
+  // Also add the days in December
+  totalDaysLeft += daysInMonth(year, 11);
+
+  // Step 3: Convert days to total hours, minutes, and seconds
+  const totalHoursLeft = totalDaysLeft * 24;  // Convert days to hours
+  const totalMinutesLeft = totalHoursLeft * 60; // Convert hours to minutes
+  const totalSecondsLeft = totalMinutesLeft * 60; // Convert minutes to seconds
+
+  // Now calculate the remaining hours, minutes, and seconds left in the current day
+  const currentTimeSeconds = currentTime.hours * 3600 + currentTime.minutes * 60 + currentTime.seconds;
+  const endOfDaySeconds = 24 * 3600;
+  const secondsLeftToday = endOfDaySeconds - currentTimeSeconds;
+
+  return {
+    months: remainingMonths,          // Total months left until the end of the year
+    days: totalDaysLeft,              // Total days left until the end of the year
+    hours: totalHoursLeft + Math.floor(secondsLeftToday / 3600),     // Total hours left
+    minutes: totalMinutesLeft + Math.floor((secondsLeftToday % 3600) / 60), // Total minutes left
+    seconds: totalSecondsLeft + secondsLeftToday % 60  // Total seconds left
+  };
+}
+
+const EndOfYear = timeUntilEndOfYear(date, time);
+console.log(EndOfYear);
