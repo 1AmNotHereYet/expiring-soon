@@ -11,7 +11,34 @@
 		<link rel="stylesheet" href="styles.css">
 	</head>
 	<body>
-		<div class="centered-div"></div>
+		<div class="centered-div">
+			<div class="tab-buttons">
+				<button class="tab-button active" onclick="openTab(event, 'day-tab')">Today</button>
+				<button class="tab-button" onclick="openTab(event, 'month-tab')">September</button>
+				<button class="tab-button" onclick="openTab(event, 'year-tab')">2024</button>
+			</div>
+
+	        <div id="day-tab" class="tab-content active">
+	            <p>Hours</p>
+	            <p>Minutes</p>
+	            <p>Seconds</p>
+	        </div>
+
+	        <div id="month-tab" class="tab-content">
+	        	<p>Days</p>
+	            <p>Hours</p>
+	            <p>Minutes</p>
+	            <p>Seconds</p>
+	        </div>
+
+	        <div id="year-tab" class="tab-content">
+	        	<p>Months</p>
+	        	<p>Days</p>
+	            <p>Hours</p>
+	            <p>Minutes</p>
+	            <p>Seconds</p>
+	        </div>
+		</div>
 		<script src="app.js"></script>
 	</body>
 </html>
