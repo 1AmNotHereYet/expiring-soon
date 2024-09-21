@@ -10,3 +10,34 @@ body {
    	height: 350px;
     border: solid;
 }
+
+.tab-buttons {
+    display: flex;
+    background-color: #f1f1f1;
+}
+
+.tab-button {
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    flex-grow: 1;
+}
+
+.tab-button:hover {
+    background-color: #ddd;
+}
+
+.tab-button.active {
+    background-color: #ccc;
+}
+
+.tab-content {
+    display: none;
+    padding: 15px;
+    height: calc(100% - 80px);
+    overflow-y: auto;
+}
+
+.tab-content.active {
+    display: block;
+}
