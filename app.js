@@ -127,9 +127,6 @@ function timeUntilEndOfYear(currentDate, currentTime) {
 
 const time = getCurrentTime();
 const date = getCurrentDate();
-const EndOfDay = timeUntilEndOfDay(time);
-const EndOfMonth = timeUntilEndOfMonth(date, time);
-const EndOfYear = timeUntilEndOfYear(date, time);
 
 function openTab(event, tabName) {
 
@@ -158,3 +155,68 @@ monthButton.textContent = `${date.monthName}`;
 
 const yearButton = document.querySelector('#year-button');
 yearButton.textContent = `${date.year}`;
+
+function displayEndOfDay() {
+
+  const endOfDay = document.querySelector('#day-tab');
+
+  function updateEndOfDay() {
+    const currentTime = getCurrentTime();
+    const remainingTime = timeUntilEndOfDay(currentTime);
+
+    endOfDay.children[0].textContent = `Hours: ${remainingTime.hours}`;
+    endOfDay.children[1].textContent = `Minutes: ${remainingTime.minutes}`;
+    endOfDay.children[2].textContent = `Seconds: ${remainingTime.seconds}`;
+
+    setTimeout(updateEndOfDay, 1000);
+  }
+
+  updateEndOfDay();
+}
+
+function displayEndOfMonth() {
+
+  const endOfMonth = document.querySelector('#month-tab');
+
+  function updateEndOfMonth() {
+    const currentTime = getCurrentTime();
+    const currentDate = getCurrentDate();
+    const remainingTime = timeUntilEndOfMonth(currentDate, currentTime);
+
+    endOfMonth.children[0].textContent = `Days: ${remainingTime.days}`;
+    endOfMonth.children[1].textContent = `Hours: ${remainingTime.hours}`;
+    endOfMonth.children[2].textContent = `Minutes: ${remainingTime.minutes}`;
+    endOfMonth.children[3].textContent = `Seconds: ${remainingTime.seconds}`;
+
+    setTimeout(updateEndOfMonth, 1000);
+  }
+
+  updateEndOfMonth();
+}
+
+function displayEndOfYear() {
+
+  const endOfYear = document.querySelector('#year-tab');
+
+  function updateEndOfYear() {
+    const currentTime = getCurrentTime();
+    const currentDate = getCurrentDate();
+    const remainingTime = timeUntilEndOfYear(currentDate, currentTime);
+
+    endOfYear.children[0].textContent = `Months: ${remainingTime.months} +`;
+    endOfYear.children[1].textContent = `Days: ${remainingTime.days}`;
+    endOfYear.children[2].textContent = `Hours: ${remainingTime.hours}`;
+    endOfYear.children[3].textContent = `Minutes: ${remainingTime.minutes}`;
+    endOfYear.children[4].textContent = `Seconds: ${remainingTime.seconds}`;
+
+    setTimeout(updateEndOfYear, 1000);
+  }
+
+  updateEndOfYear();
+}
+
+displayEndOfDay();
+
+displayEndOfMonth();
+
+displayEndOfYear();
