@@ -125,9 +125,6 @@ function timeUntilEndOfYear(currentDate, currentTime) {
   };
 }
 
-const time = getCurrentTime();
-const date = getCurrentDate();
-
 function openTab(event, tabName) {
 
   var i, tabContent, tabButtons;
@@ -147,14 +144,25 @@ function openTab(event, tabName) {
   event.currentTarget.classList.add("active");
 }
 
-const dayButton = document.querySelector('#day-button');
-dayButton.textContent = `${date.dayName} ${date.dayNumber}`;
+function updateButtonLabels() {
 
-const monthButton = document.querySelector('#month-button');
-monthButton.textContent = `${date.monthName}`;
+  function liveUpdate() {
+    const date = getCurrentDate();
 
-const yearButton = document.querySelector('#year-button');
-yearButton.textContent = `${date.year}`;
+    const dayButton = document.querySelector('#day-button');
+    dayButton.textContent = `${date.dayName} ${date.dayNumber}`;
+
+    const monthButton = document.querySelector('#month-button');
+    monthButton.textContent = `${date.monthName}`;
+
+    const yearButton = document.querySelector('#year-button');
+    yearButton.textContent = `${date.year}`;
+
+    setTimeout(liveUpdate, 1000);
+  }
+
+  liveUpdate();
+}
 
 function displayEndOfDay() {
 
@@ -214,6 +222,8 @@ function displayEndOfYear() {
 
   updateEndOfYear();
 }
+
+updateButtonLabels();
 
 displayEndOfDay();
 
