@@ -144,9 +144,9 @@ function openTab(event, tabName) {
   event.currentTarget.classList.add("active");
 }
 
-function updateButtonLabels() {
+function ButtonLabels() {
 
-  function liveUpdate() {
+  function UpdateLabels() {
     const date = getCurrentDate();
 
     const dayButton = document.querySelector('#day-button');
@@ -158,10 +158,10 @@ function updateButtonLabels() {
     const yearButton = document.querySelector('#year-button');
     yearButton.textContent = `${date.year}`;
 
-    setTimeout(liveUpdate, 1000);
+    setTimeout(UpdateLabels, 1000);
   }
 
-  liveUpdate();
+  UpdateLabels();
 }
 
 function displayEndOfDay() {
@@ -223,7 +223,7 @@ function displayEndOfYear() {
   updateEndOfYear();
 }
 
-updateButtonLabels();
+ButtonLabels();
 
 displayEndOfDay();
 
