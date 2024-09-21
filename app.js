@@ -149,3 +149,12 @@ function openTab(event, tabName) {
 
   event.currentTarget.classList.add("active");
 }
+
+const dayButton = document.querySelector('#day-button');
+dayButton.textContent = `${date.dayName} ${date.dayNumber}`;
+
+const monthButton = document.querySelector('#month-button');
+monthButton.textContent = `${date.monthName}`;
+
+const yearButton = document.querySelector('#year-button');
+yearButton.textContent = `${date.year}`;
