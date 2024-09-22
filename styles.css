@@ -14,13 +14,16 @@ body {
 .tab-buttons {
     display: flex;
     background-color: #f1f1f1;
+    justify-content: space-between;
 }
 
 .tab-button {
+    font-size: 17px;
+    height: 50px;
+    width: 100px;
     padding: 10px;
     cursor: pointer;
     border: none;
-    flex: 1;
 }
 
 .tab-button:hover {
